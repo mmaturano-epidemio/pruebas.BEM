@@ -2,11 +2,12 @@
 library(epiDisplay);library(epicalc);library(dplyr)
 zap();ls()
 Base <- read.csv2("NEUQUEN_CLI.csv",sep=";",as.is = TRUE)
-use(Base)
+use(Base)#carga la base a la memoria de R, agilizando el trabajo
 search()#chequeo que ".data" esté
 #Exploro un poco la base####
 names(Base)
-table(Base$NOMBREGRPEVENTOAGRP)
+table(Base$NOMBREGRPEVENTOAGRP) #O directamente:
+table(NOMBREGRPEVENTOAGRP) #Esto funciona por "use"
 epiDisplay::codebook(subset(Base,NOMBREGRPEVENTOAGRP=="Respiratorias",select = c(ANIO,SEMANA,NOMBREEVENTOAGRP)))
 summary(subset(Base,NOMBREGRPEVENTOAGRP=="Respiratorias",select = c(ANIO,SEMANA,NOMBREEVENTOAGRP)))
 Base$NOMBREEVENTOAGRP <- as.factor(Base$NOMBREEVENTOAGRP)
