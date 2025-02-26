@@ -5,7 +5,7 @@ Base <- read.csv2("NEUQUEN_CLI.csv",sep=";",as.is = TRUE)
 use(Base)#carga la base a la memoria de R, agilizando el trabajo
 search()#chequeo que ".data" esté
 #Exploro un poco la base####
-names(Base)
+names(Base)#
 table(Base$NOMBREGRPEVENTOAGRP) #O directamente:
 table(NOMBREGRPEVENTOAGRP) #Esto funciona por "use"
 epiDisplay::codebook(subset(Base,NOMBREGRPEVENTOAGRP=="Respiratorias",select = c(ANIO,SEMANA,NOMBREEVENTOAGRP)))
