@@ -79,5 +79,7 @@ barplot((table(SEXO)),
         ylab = "Casos",
         col = c("red", "lightyellow","lightgreen"),  
         border = "black",         
-        ylim = c(0, 500)  
+        ylim = c(0, (max(table(SEXO)))+10)
 )
+
+      
