@@ -18,13 +18,6 @@ use(Monóxido_filtrada)#reemplazo la base que está en la memoria. Esto sirve por 
 #Exploro la base####
 epiDisplay::summ(Monóxido_filtrada)
 epiDisplay::codebook(Monóxido_filtrada)
-class(SEPI_APERTURA);class(ANIO_EPI_APERTURA)
-Monóxido_filtrada$REGION_SANITARIA_CARGA <- as.factor(Monóxido_filtrada$REGION_SANITARIA_CARGA)
-summ(Monóxido_filtrada$REGION_SANITARIA_CARGA)#claramente está por zonas
-summ(ANIO_EPI_APERTURA)#tenemos dos años...
-CO2_2023 <- subset(Monóxido_filtrada, Monóxido_filtrada$ANIO_EPI_APERTURA == 2023)
-CO2_2024 <- subset(Monóxido_filtrada, Monóxido_filtrada$ANIO_EPI_APERTURA == 2024)
-
 #Voy a hacer dos histogramas yuxtapuestos para casos por año####
 par(mfrow = c(1, 2))#Para que quepan dos histogramas
 # 2023
@@ -63,3 +56,4 @@ barplot((table(SEXO)),
                 border = "black",         
                 ylim = c(0, 500)  
 )
+barplot()
