@@ -43,6 +43,8 @@ use(Monóxido_filtrada)#reemplazo la base que está en la memoria. Esto sirve por 
 #Exploro la base####
 epiDisplay::summ(Monóxido_filtrada)
 epiDisplay::codebook(Monóxido_filtrada)
+epiDisplay::summ(SEPI_APERTURA)
+epiDisplay::summ(as.factor(SEXO))
 #Voy a hacer dos histogramas yuxtapuestos para casos por año####
 par(mfrow = c(1, 2))#Para que quepan dos histogramas
 # 2023
@@ -81,5 +83,3 @@ barplot((table(SEXO)),
         border = "black",         
         ylim = c(0, (max(table(SEXO)))+10)
 )
-
-      
