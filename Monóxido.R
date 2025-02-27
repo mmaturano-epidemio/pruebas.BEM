@@ -11,8 +11,33 @@ table(ID_SNVS_EVENTO)
 table(EVENTO)
 
 #Filtro la base####
-Monóxido_filtrada <- subset(Base,Base$EVENTO=="Intoxicaci\xf3n/Exposici\xf3n por Mon\xf3xido de Carbono",select=(c("IDEVENTOCASO","SEXO","ANIO_EPI_APERTURA","ANIO_EPI_MUESTRA","ANIO_EPI_SINTOMA","CALLE_DOMICILIO","CLASIFICACION_MANUAL","EDAD_DIAGNOSTICO","ESTABLECIMIENTO_CARGA","ESTABLECIMIENTO_DIAG","EVENTO","FALLECIDO","FECHA_APERTURA","FECHA_INICIO_SINTOMA","FECHA_NACIMIENTO","FIS","GRUPO_ETARIO","LOCALIDAD_CARGA","LOCALIDAD_RESIDENCIA","PROVINCIA_RESIDENCIA","REGION_SANITARIA_CARGA","REGION_SANITARIA_CLINICA","SEPI_APERTURA","SEPI_CONSULTA","SEPI_SINTOMA")))
-length(Monóxido_filtrada[,1]);length(unique(Monóxido_filtrada[,1]))#hay duplis
+Monóxido_filtrada <- subset(Base,Base$EVENTO=="Intoxicaci\xf3n/Exposici\xf3n por Mon\xf3xido de Carbono",
+                            select=(c("IDEVENTOCASO",
+                                      "SEXO",
+                                      "ANIO_EPI_APERTURA",
+                                      "ANIO_EPI_MUESTRA",
+                                      "ANIO_EPI_SINTOMA",
+                                      "CALLE_DOMICILIO",
+                                      "CLASIFICACION_MANUAL",
+                                      "EDAD_DIAGNOSTICO",
+                                      "ESTABLECIMIENTO_CARGA",
+                                      "ESTABLECIMIENTO_DIAG",
+                                      "EVENTO","FALLECIDO",
+                                      "FECHA_APERTURA",
+                                      "FECHA_INICIO_SINTOMA",
+                                      "FECHA_NACIMIENTO",
+                                      "FIS",
+                                      "GRUPO_ETARIO",
+                                      "LOCALIDAD_CARGA",
+                                      "LOCALIDAD_RESIDENCIA",
+                                      "PROVINCIA_RESIDENCIA",
+                                      "REGION_SANITARIA_CARGA",
+                                      "REGION_SANITARIA_CLINICA",
+                                      "SEPI_APERTURA",
+                                      "SEPI_CONSULTA",
+                                      "SEPI_SINTOMA")))
+#chequeo si hay duplis y los filtro####
+length(Monóxido_filtrada[,1]);length(unique(Monóxido_filtrada[,1]))
 Monóxido_filtrada <- Monóxido_filtrada[!duplicated(Monóxido_filtrada[,1]),]#filtro duplis
 use(Monóxido_filtrada)#reemplazo la base que está en la memoria. Esto sirve por ejemplo para poder operar con las columnas sin tener que aneponer "BASE$" al nombre
 #Exploro la base####
@@ -45,14 +70,14 @@ hist((filter(Monóxido_filtrada,Monóxido_filtrada$ANIO_EPI_APERTURA==2024))$SEPI_
 )
 
 
-        
+
 #Hago un barplot de sexo####
 par(mfrow = c(1, 1))#Para que quepa un solo gráfico
 barplot((table(SEXO)), 
-                main = "Casos según sexo",  
-                xlab = "Sexo legal",             
-                ylab = "Casos",
-                col = c("red", "lightyellow","lightgreen"),  
-                border = "black",         
-                ylim = c(0, 500)  
+        main = "Casos según sexo",  
+        xlab = "Sexo legal",             
+        ylab = "Casos",
+        col = c("red", "lightyellow","lightgreen"),  
+        border = "black",         
+        ylim = c(0, 500)  
 )
