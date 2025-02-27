@@ -52,7 +52,7 @@ barplot((table(SEXO)),
                 main = "Casos según sexo",  
                 xlab = "Sexo legal",             
                 ylab = "Casos",
-                col = c("red", "lightblue","lightpink"),  
+                col = c("red", "lightyellow","lightgreen"),  
                 border = "black",         
                 ylim = c(0, 500)  
 )
