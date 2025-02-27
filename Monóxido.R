@@ -1,7 +1,7 @@
 #Cargo bases y librerías####
 library(epiDisplay);library(epicalc);library(dplyr);library(tidyverse)
 epicalc::zap()#esto borra lo que hay en environment incluyendo ocultos
-ls()
+ls()#corroboro que no queda nada
 Base <- read.csv2("NEUQUEN_NOMINAL.csv",sep=";",as.is = TRUE)
 use(Base)#carga la base a la memoria de R, agilizando el trabajo, es similar a attach 
 search()#chequeo que ".data" esté en la memoria
