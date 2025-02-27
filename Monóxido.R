@@ -1,19 +1,19 @@
 #Cargo bases y librerías####
 library(epiDisplay);library(epicalc);library(dplyr);library(tidyverse)
-epicalc::zap()
+epicalc::zap()#esto borra lo que hay en environment incluyendo ocultos
 ls()
 Base <- read.csv2("NEUQUEN_NOMINAL.csv",sep=";",as.is = TRUE)
 use(Base)#carga la base a la memoria de R, agilizando el trabajo, es similar a attach 
 search()#chequeo que ".data" esté en la memoria
 length(IDEVENTOCASO);length(unique(IDEVENTOCASO))#Hay duplis...
-View(table(names(Base)))
+View(table(names(Base)))#a ver qué hay para armar el filtro
 table(ID_SNVS_EVENTO)
 table(EVENTO)
 
 #Filtro la base####
-Monóxido <- subset(Base,Base$EVENTO=="Intoxicaci\xf3n/Exposici\xf3n por Mon\xf3xido de Carbono",select=(c("IDEVENTOCASO","SEXO","ANIO_EPI_APERTURA","ANIO_EPI_MUESTRA","ANIO_EPI_SINTOMA","CALLE_DOMICILIO","CLASIFICACION_MANUAL","EDAD_DIAGNOSTICO","ESTABLECIMIENTO_CARGA","ESTABLECIMIENTO_DIAG","EVENTO","FALLECIDO","FECHA_APERTURA","FECHA_INICIO_SINTOMA","FECHA_NACIMIENTO","FIS","GRUPO_ETARIO","LOCALIDAD_CARGA","LOCALIDAD_RESIDENCIA","PROVINCIA_RESIDENCIA","REGION_SANITARIA_CARGA","REGION_SANITARIA_CLINICA","SEPI_APERTURA","SEPI_CONSULTA","SEPI_SINTOMA")))
-length(Monóxido[,1]);length(unique(Monóxido[,1]))#hay duplis
-Monóxido_filtrada <- Monóxido[!duplicated(Monóxido[,1]),]#filtro duplis
+Monóxido_filtrada <- subset(Base,Base$EVENTO=="Intoxicaci\xf3n/Exposici\xf3n por Mon\xf3xido de Carbono",select=(c("IDEVENTOCASO","SEXO","ANIO_EPI_APERTURA","ANIO_EPI_MUESTRA","ANIO_EPI_SINTOMA","CALLE_DOMICILIO","CLASIFICACION_MANUAL","EDAD_DIAGNOSTICO","ESTABLECIMIENTO_CARGA","ESTABLECIMIENTO_DIAG","EVENTO","FALLECIDO","FECHA_APERTURA","FECHA_INICIO_SINTOMA","FECHA_NACIMIENTO","FIS","GRUPO_ETARIO","LOCALIDAD_CARGA","LOCALIDAD_RESIDENCIA","PROVINCIA_RESIDENCIA","REGION_SANITARIA_CARGA","REGION_SANITARIA_CLINICA","SEPI_APERTURA","SEPI_CONSULTA","SEPI_SINTOMA")))
+length(Monóxido_filtrada[,1]);length(unique(Monóxido_filtrada[,1]))#hay duplis
+Monóxido_filtrada <- Monóxido_filtrada[!duplicated(Monóxido_filtrada[,1]),]#filtro duplis
 use(Monóxido_filtrada)#reemplazo la base que está en la memoria. Esto sirve por ejemplo para poder operar con las columnas sin tener que aneponer "BASE$" al nombre
 #Exploro la base####
 epiDisplay::summ(Monóxido_filtrada)
@@ -56,4 +56,3 @@ barplot((table(SEXO)),
                 border = "black",         
                 ylim = c(0, 500)  
 )
-barplot()
