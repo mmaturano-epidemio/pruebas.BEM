@@ -37,7 +37,7 @@ Monóxido_filtrada <- subset(Base,Base$EVENTO=="Intoxicaci\xf3n/Exposici\xf3n por
                                       "SEPI_CONSULTA",
                                       "SEPI_SINTOMA")))
 #chequeo si hay duplis y los filtro####
-length(Monóxido_filtrada[,1]);length(unique(Monóxido_filtrada[,1]))
+length(Monóxido_filtrada[,1]);length(unique(Monóxido_filtrada[,1]))#hay duplis
 Monóxido_filtrada <- Monóxido_filtrada[!duplicated(Monóxido_filtrada[,1]),]#filtro duplis
 use(Monóxido_filtrada)#reemplazo la base que está en la memoria. Esto sirve por ejemplo para poder operar con las columnas sin tener que aneponer "BASE$" al nombre
 #Exploro la base####
