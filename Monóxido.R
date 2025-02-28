@@ -1,5 +1,5 @@
 #Cargo bases y librerías####
-library(epiDisplay);library(epicalc);library(dplyr);library(tidyverse)
+library(epiDisplay);library(epicalc)
 epicalc::zap()#esto borra lo que hay en environment incluyendo ocultos
 ls()#corroboro que no queda nada
 Base <- read.csv2("NEUQUEN_NOMINAL.csv",sep=";",as.is = TRUE)
@@ -53,7 +53,7 @@ hist((filter(Monóxido_filtrada,Monóxido_filtrada$ANIO_EPI_APERTURA==2023))$SEPI_
      main = "Casos 2023", 
      xlab = "SE", 
      ylab = "Casos", 
-     col = "lightblue", 
+     col = "pink", 
      border = "black", 
      xlim = c(1, 52), 
      ylim = c(0, max(table(Monóxido_filtrada$SEPI_APERTURA)) + 1)  #Límite eje Y
@@ -65,7 +65,7 @@ hist((filter(Monóxido_filtrada,Monóxido_filtrada$ANIO_EPI_APERTURA==2024))$SEPI_
      main = "Casos 2024", 
      xlab = "SE", 
      ylab = "Casos", 
-     col = "lightgreen", 
+     col = "violet", 
      border = "black", 
      xlim = c(1, 52), 
      ylim = c(0, max(table(Monóxido_filtrada$SEPI_APERTURA)) + 1)  
@@ -77,7 +77,7 @@ barplot((table(SEXO)),
         main = "Casos según sexo",  
         xlab = "Sexo legal",             
         ylab = "Casos",
-        col = c("pink", "lightyellow","lightgreen"),  
+        col = c("pink", "lightgreen","blue"),  
         border = "black",         
         ylim = c(0, (max(table(SEXO)))+10)
 )
@@ -109,19 +109,28 @@ table(Monóxido_filtrada$GRUPO_ETARIO)#no se arregló posneonato
 Monóxido_filtrada$GRUPO_ETARIO <- gsub("Posneonato \\(29 hasta 365 d\xcdas\\)", "Posneonato", Monóxido_filtrada$GRUPO_ETARIO, fixed = TRUE)
 table(Monóxido_filtrada$GRUPO_ETARIO)
 #no puedo resolver la sintaxis de "Posneonato", voy a crear mi propia columna de grupo etario####
-Monóxido_filtrada$GRUPO_DE_EDAD <- cut(Monóxido_filtrada$EDAD_DIAGNOSTICO,breaks = c(seq(from=-1,to=100, by= 20)))
-levels(Monóxido_filtrada$GRUPO_DE_EDAD) <- c("0-19","20-39","40-59","60-79","80>")
+Monóxido_filtrada$GRUPO_DE_EDAD <- cut(Monóxido_filtrada$EDAD_DIAGNOSTICO,breaks = c(seq(from=-1,to=100, by= 10)))
+levels(Monóxido_filtrada$GRUPO_DE_EDAD) <- c("0-9","10-19","20-29","30-39","49-49","50-59","60-69","70-79","79-89","90+")
 table(Monóxido_filtrada$GRUPO_DE_EDAD)                                       
 #ahora sí grafico grupo etario####
 barplot((table(Monóxido_filtrada$GRUPO_DE_EDAD)), 
         main = "Casos según grupo etario",  
         xlab = "Grupo etario (años)",             
         ylab = "Casos",
-        col = c("orange", "lightyellow","lightgreen","lightblue","pink"),  
+        col = c("orange", "red","yellow","lightgreen","lightblue","violet","purple","pink","green","blue"),  
         border = "black",         
         ylim = c(0, (max(table(Monóxido_filtrada$GRUPO_DE_EDAD)))+1),
         #xlim = c(0,10),
         #horiz = TRUE,
-        las=2,
-        cex.names = 0.8
+        las=1,
+        cex.names = .9
 )
+
+#A ver qué más hay ####
+names(Monóxido_filtrada)
+table(FALLECIDO)#hubo 5 fallecidos
+Monóxido_filtrada[(Monóxido_filtrada$FALLECIDO=="SI"),8]#edad de los fallecidos: 4, 39, 22, 54 y 7 años
+table(CLASIFICACION_MANUAL)#49 casos sospechosos, 460 confirmados
+table(Monóxido_filtrada[Monóxido_filtrada$ANIO_EPI_APERTURA==2024,7]);table(Monóxido_filtrada[Monóxido_filtrada$ANIO_EPI_APERTURA==2023,7])
+#En 2024, 33 sospechosos y 245 confirmados; en 2023, 15 sospechosos y 210 confirmados
+#¿Descartar sospechosos?
