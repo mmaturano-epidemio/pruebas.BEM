@@ -6,9 +6,9 @@ Base <- read.csv2("NEUQUEN_NOMINAL.csv",sep=";",as.is = TRUE)
 use(Base)#carga la base a la memoria de R, agilizando el trabajo, es similar a attach 
 search()#chequeo que ".data" esté en la memoria
 length(IDEVENTOCASO);length(unique(IDEVENTOCASO))#Hay duplis...
-View(table(names(Base)))#a ver qué hay para armar el filtro
-table(ID_SNVS_EVENTO)
-table(EVENTO)
+#View(table(names(Base)))#para ver qué hay para armar el filtro
+#table(ID_SNVS_EVENTO)
+#table(EVENTO)
 
 #Filtro la base####
 Monóxido_filtrada <- subset(Base,Base$EVENTO=="Intoxicaci\xf3n/Exposici\xf3n por Mon\xf3xido de Carbono",
@@ -71,15 +71,57 @@ hist((filter(Monóxido_filtrada,Monóxido_filtrada$ANIO_EPI_APERTURA==2024))$SEPI_
      ylim = c(0, max(table(Monóxido_filtrada$SEPI_APERTURA)) + 1)  
 )
 
-
-
 #Hago un barplot de sexo####
 par(mfrow = c(1, 1))#Para que quepa un solo gráfico
 barplot((table(SEXO)), 
         main = "Casos según sexo",  
         xlab = "Sexo legal",             
         ylab = "Casos",
-        col = c("red", "lightyellow","lightgreen"),  
+        col = c("pink", "lightyellow","lightgreen"),  
         border = "black",         
         ylim = c(0, (max(table(SEXO)))+10)
+)
+
+#A ver qué se puede hacer con grupo etario####
+table(GRUPO_ETARIO)
+par(mfrow = c(1, 1))#Para que quepa un solo gráfico
+
+barplot((table(GRUPO_ETARIO)), 
+        main = "Casos según GE",  
+        xlab = "GE",             
+        ylab = "Casos",
+        #col = c("red", "lightyellow","lightgreen"),  
+        border = "black",         
+        ylim = c(0, (max(table(GRUPO_ETARIO)))+1),
+        #xlim = c(0,10),
+        #horiz = TRUE,
+        #las=2,
+        #cex.names = 0.2
+)
+#Las columnas salen sin rótulo porque los nombres son muy largos
+#acorto los nombres
+table(GRUPO_ETARIO)
+Monóxido_filtrada$GRUPO_ETARIO <- gsub("De (\\d+) a (\\d+) a\xf1os", "\\1-\\2", Monóxido_filtrada$GRUPO_ETARIO)# Grupos etarios estándar
+Monóxido_filtrada$GRUPO_ETARIO <- gsub("Posneonato (29 hasta 365 d\xcdas)", "Posneonato", Monóxido_filtrada$GRUPO_ETARIO)  # Posneonato
+Monóxido_filtrada$GRUPO_ETARIO  <- gsub("Mayores de 65 a\xf1os", "65+", Monóxido_filtrada$GRUPO_ETARIO)  # Mayores de 65 años
+Monóxido_filtrada$GRUPO_ETARIO  <- gsub("De (\\d+) a (\\d+) meses", "\\1-\\2m", Monóxido_filtrada$GRUPO_ETARIO)  # De 13 a 24 meses
+table(Monóxido_filtrada$GRUPO_ETARIO)#no se arregló posneonato
+Monóxido_filtrada$GRUPO_ETARIO <- gsub("Posneonato \\(29 hasta 365 d\xcdas\\)", "Posneonato", Monóxido_filtrada$GRUPO_ETARIO, fixed = TRUE)
+table(Monóxido_filtrada$GRUPO_ETARIO)
+#no puedo resolver la sintaxis de "Posneonato", voy a crear mi propia columna de grupo etario####
+Monóxido_filtrada$GRUPO_DE_EDAD <- cut(Monóxido_filtrada$EDAD_DIAGNOSTICO,breaks = c(seq(from=-1,to=100, by= 20)))
+levels(Monóxido_filtrada$GRUPO_DE_EDAD) <- c("0-19","20-39","40-59","60-79","80>")
+table(Monóxido_filtrada$GRUPO_DE_EDAD)                                       
+#ahora sí grafico grupo etario####
+barplot((table(Monóxido_filtrada$GRUPO_DE_EDAD)), 
+        main = "Casos según grupo etario",  
+        xlab = "Grupo etario (años)",             
+        ylab = "Casos",
+        col = c("orange", "lightyellow","lightgreen","lightblue","pink"),  
+        border = "black",         
+        ylim = c(0, (max(table(Monóxido_filtrada$GRUPO_DE_EDAD)))+1),
+        #xlim = c(0,10),
+        #horiz = TRUE,
+        las=2,
+        cex.names = 0.8
 )
